@@ -1,17 +1,15 @@
 from init.imports import *
 from init.logs import setup
 
-from objects.address_popup import AddressPopupAssets
-
 from modules.history import History
 
 class AddressPopup(QWidget):
     output_signal = Signal(str)
     
-    def __init__(self):
+    def __init__(self, screen: Screen):
         super().__init__()
         # Creating assets object.
-        self.assets = AddressPopupAssets()
+        self.assets = AddressPopupAssets(screen)
         
         # Creating log object.
         self.log = setup("MODULES.WINDOW.ADDRESS_POPUP")
@@ -43,7 +41,7 @@ class AddressPopup(QWidget):
             
             layout.addWidget(self.label)
             layout.addWidget(self.address_box)
-            layout.addWidget(self.address_input_button)
+            layout.addWidget(self.address_input_button, alignment = Qt.AlignmentFlag.AlignCenter) # Add widget and align to center.
         
         def center_window():
             self.log.info("Centering.")
@@ -114,3 +112,5 @@ class APushButton(QPushButton):
         super().__init__()
         self.setParent(parent)
         self.setText("OK")
+        
+        self.setFixedWidth(parent.width() * 0.1) # 10% of window width

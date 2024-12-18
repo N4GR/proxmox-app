@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout, QLabel, 
 )
 from PySide6.QtGui import (
-    QIcon
+    QIcon, QGuiApplication
 )
 from PySide6.QtCore import (
     Signal, Qt
@@ -23,4 +23,10 @@ from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import (
     QWebEngineProfile, QWebEnginePage,
     QWebEngineCertificateError
+)
+
+# Local objects.
+from objects import (
+    MainWindowAssets, AddressPopupAssets,
+    PXIcon, Screen
 )

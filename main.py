@@ -12,7 +12,10 @@ class main:
         
         self.app = QApplication(sys.argv)
         
-        self.address_popup = AddressPopup()
+        # Creating screen object.
+        self.screen = Screen(self.app)
+        
+        self.address_popup = AddressPopup(self.screen)
         self.address_popup.output_signal.connect(self.address_output)
         
         # Run application event loop.
@@ -20,7 +23,7 @@ class main:
     
     def address_output(self, address: str):
         # Create the window with the given address.
-        self.window = MainWindow(address)
+        self.window = MainWindow(address, self.screen)
 
 if __name__ == "__main__":
     main() 

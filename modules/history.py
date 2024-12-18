@@ -1,11 +1,11 @@
 from init.imports import *
 from init.logs import setup
 
-# Creating log object.
-log = setup("MODULES.HISTORY")
-
 class History:
     def __init__(self):
+        # Creating log object.
+        self.log = setup("MODULES.HISTORY")
+        
         self.directory = "data"
         self.file = "history.json"
         self.full_path = os.path.join(self.directory, self.file)
@@ -30,7 +30,7 @@ class History:
                 
                 return True
             except Exception as error:
-                log.error(error)
+                self.log.error(error)
                 return False
         else:
             return True
@@ -44,7 +44,7 @@ class History:
                 return True
                 
             except Exception as error:
-                log.error(error)
+                self.log.error(error)
                 return False
         
         if os.path.isfile(self.full_path):
@@ -58,16 +58,16 @@ class History:
                 return json.load(file)["history"]
             
         except Exception as error:
-            log.error(error)
+            self.log.error(error)
             
             return False
     
     def add_item(self, item: str):
-        log.info(f"Adding to history: ({item})")
+        self.log.info(f"Adding to history: ({item})")
         
         # Checks if the item is already in the list.
         if item in self.json:
-            log.info(f"Already in history: ({item})")
+            self.log.info(f"Already in history: ({item})")
             
             # Remove it from the list.
             self.json.remove(item)

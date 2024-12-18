@@ -3,10 +3,9 @@ from init.logs import setup
 
 # Local imports
 from modules.web_engine import WebEngine
-from objects.main_window import MainWindowAssets
 
 class MainWindow(QMainWindow):
-    def __init__(self, address: str):
+    def __init__(self, address: str, screen: Screen):
         super().__init__()
         # Creating log object.
         self.log = setup("MODULES.WINDOW.MAIN_WINDOW")
@@ -15,7 +14,7 @@ class MainWindow(QMainWindow):
         self.address = address
         
         # Initialise main window assets object.
-        self.assets = MainWindowAssets()
+        self.assets = MainWindowAssets(screen)
         
         # Adding window design
         self.add_design()
