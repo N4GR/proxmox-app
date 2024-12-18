@@ -9,7 +9,7 @@ import json
 from PySide6.QtWidgets import (
     QMainWindow, QApplication,
     QWidget, QPushButton, QComboBox,
-    QVBoxLayout, QLabel, 
+    QVBoxLayout, QLabel
 )
 from PySide6.QtGui import (
     QIcon, QGuiApplication
@@ -27,6 +27,6 @@ from PySide6.QtWebEngineCore import (
 
 # Local objects.
 from objects import (
-    MainWindowAssets, AddressPopupAssets,
+    WindowAssets, Codes,
     PXIcon, Screen
 )

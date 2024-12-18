@@ -29,23 +29,19 @@ class Screen:
         self.width = self.geometry.width()
         self.height = self.geometry.height()
 
-class MainWindowAssets:
-    def __init__(self, screen: Screen):
-        # Making height and width 50% of the screen width and height.
-        self.height = screen.height * 0.5
-        self.width = screen.width * 0.5
+class WindowAssets:
+    def __init__(self, screen: Screen, relative_size: tuple[float, float], window_title: int, icon_path: str):
+        self.relative_height, self.relative_width = relative_size
         
-        self.title = "PROXMOX"
+        self.height = screen.height * self.relative_height
+        self.width = screen.width * self.relative_width
         
-        self.px_icon = PXIcon("assets/window/proxmox.ico")
-        self.icon = self.px_icon.icon
+        self.title = window_title
+        
+        self.icon = QIcon(Path(icon_path))
 
-class AddressPopupAssets:
-    def __init__(self, screen: Screen):
-        self.height = screen.height * 0.05 # 5% of screen height.
-        self.width = screen.width * 0.1 # 10% of screen width.
-        
-        self.title = "PROXMOX"
-        
-        self.px_icon = PXIcon("assets/window/proxmox.ico")
-        self.icon = self.px_icon.icon
+class Codes:
+    error = {
+        0: "OK",
+        1: "No input given."
+    }

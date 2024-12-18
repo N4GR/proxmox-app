@@ -63,8 +63,6 @@ class History:
             return False
     
     def add_item(self, item: str):
-        self.log.info(f"Adding to history: ({item})")
-        
         # Checks if the item is already in the list.
         if item in self.json:
             self.log.info(f"Already in history: ({item})")
@@ -75,6 +73,8 @@ class History:
             # Add it to the beginning of the list.
             self.json.insert(0, item)
         else:
+            self.log.info(f"Adding to history: ({item})")
+            
             # Add new item to beginning of list.
             self.json.insert(0, item)
         

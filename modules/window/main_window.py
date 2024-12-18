@@ -14,7 +14,12 @@ class MainWindow(QMainWindow):
         self.address = address
         
         # Initialise main window assets object.
-        self.assets = MainWindowAssets(screen)
+        self.assets = WindowAssets(
+            screen = screen,
+            relative_size = (0.5, 0.5),
+            window_title = "PROXMOX",
+            icon_path = "assets/window/proxmox.ico"
+        )
         
         # Adding window design
         self.add_design()
@@ -57,7 +62,7 @@ class MainWindow(QMainWindow):
         center_window()
     
     def closeEvent(self, event):
-        self.log.info("Closing main window.")
+        self.log.info("Closing.")
         
         self.browser.close_engine()
         

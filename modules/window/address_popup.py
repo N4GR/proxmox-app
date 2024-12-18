@@ -3,13 +3,23 @@ from init.logs import setup
 
 from modules.history import History
 
+# Local imports
+from modules.window.error_popup import ErrorPopup
+
 class AddressPopup(QWidget):
     output_signal = Signal(str)
     
     def __init__(self, screen: Screen):
         super().__init__()
         # Creating assets object.
-        self.assets = AddressPopupAssets(screen)
+        self.assets = WindowAssets(
+            screen = screen,
+            relative_size = (0.05, 0.1), # 5% height, 10% width
+            window_title = "PROXMOX",
+            icon_path = "assets/window/proxmox.ico"
+        )
+        
+        self.main_screen = screen
         
         # Creating log object.
         self.log = setup("MODULES.WINDOW.ADDRESS_POPUP")
@@ -71,7 +81,28 @@ class AddressPopup(QWidget):
         center_window()
     
     def emit_output(self):
+        def check_output(output: str) -> tuple[bool, int]:
+            error_codes = Codes.error
+            
+            if output == "":
+                error_code = 1
+                
+                self.log.error(f"Invalid address input ({error_code}): {error_codes[error_code]}")
+                
+                return (False, 1)
+            
+            return (True, 0)
+        
         address = self.address_box.currentText()
+        
+        check_output(address)
+        
+        check, code = check_output(address)
+        
+        if check is not True:
+            # Create an error popup.
+            self.error_popup = ErrorPopup(self.main_screen, code)
+            return
         
         # Add the address to history.
         self.history.add_item(address)
