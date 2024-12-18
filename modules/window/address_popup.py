@@ -1,7 +1,9 @@
 from init.imports import *
 from init.logs import setup
 
-from data.objects.address_popup import AddressPopupAssets
+from objects.address_popup import AddressPopupAssets
+
+from modules.history import History
 
 class AddressPopup(QWidget):
     output_signal = Signal(str)
@@ -15,15 +17,17 @@ class AddressPopup(QWidget):
         self.log = setup("MODULES.WINDOW.ADDRESS_POPUP")
         self.log.info("Creating.")
         
+        # Creating the history object.
+        self.history = History()
+        
         # Creating Label above QLineEdit.
-        self.label = QLabel(text = "Proxmox Address", parent = self)
-        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label = ALabel(self)
         
         # Creating line edit for address input.
-        self.address_input = QLineEdit(self)
+        self.address_box = AComboBox(self, self.history)
         
         # Creating QPushButton to submit address input.
-        self.address_input_button = QPushButton(text = "OK", parent = self)
+        self.address_input_button = APushButton(self)
         self.address_input_button.clicked.connect(self.emit_output) # Connecting button to signal.
         
         # Adding window design
@@ -38,7 +42,7 @@ class AddressPopup(QWidget):
             self.setLayout(layout)
             
             layout.addWidget(self.label)
-            layout.addWidget(self.address_input)
+            layout.addWidget(self.address_box)
             layout.addWidget(self.address_input_button)
         
         def center_window():
@@ -69,7 +73,10 @@ class AddressPopup(QWidget):
         center_window()
     
     def emit_output(self):
-        address = self.address_input.text()
+        address = self.address_box.currentText()
+        
+        # Add the address to history.
+        self.history.add_item(address)
         
         self.log.info(f"Address submitted: ({address})")
         self.output_signal.emit(address)
@@ -85,3 +92,25 @@ class AddressPopup(QWidget):
         self.log.info("Closing.")
         
         self.deleteLater()
+
+class ALabel(QLabel):
+    def __init__(self, parent: QWidget | QMainWindow):
+        super().__init__()
+        self.setParent(parent)
+        self.setText("PROXMOX ADDRESS")
+        
+        self.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+class AComboBox(QComboBox):
+    def __init__(self, parent: QWidget | QMainWindow, history: History):
+        super().__init__()
+        self.setParent(parent)
+        self.setEditable(True)
+        
+        self.addItems(history.json)
+            
+class APushButton(QPushButton):
+    def __init__(self, parent: QWidget | QMainWindow):
+        super().__init__()
+        self.setParent(parent)
+        self.setText("OK")

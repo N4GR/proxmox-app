@@ -1,14 +1,14 @@
 from init.logs import setup
 
 # Creating log object.
-log = setup("DATA.OBJECTS.ADDRESS_POPUP")
+log = setup("OBJECTS.MAIN_WINDOW")
 
-from data.objects.assets import PXIcon
+from objects.assets import PXIcon
 
-class AddressPopupAssets:
+class MainWindowAssets:
     def __init__(self):
-        self.height = 100
-        self.width = 500
+        self.height = 600
+        self.width = 800
         
         self.title = "PROXMOX"
         

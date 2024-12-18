@@ -3,7 +3,7 @@ from init.logs import setup
 
 # Local imports
 from modules.web_engine import WebEngine
-from data.objects.main_window import MainWindowAssets
+from objects.main_window import MainWindowAssets
 
 class MainWindow(QMainWindow):
     def __init__(self, address: str):

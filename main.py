@@ -23,4 +23,4 @@ class main:
         self.window = MainWindow(address)
 
 if __name__ == "__main__":
-    main()
+    main() 
