@@ -163,3 +163,4 @@ logs/
 .vscode/
 output/
 data/history.json
+exe/
